@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>Planar 2R1T RCM Mechanism · Siyue Yao</title>
+  <meta name="description" content="A planar mechanism that rolls, spins and inserts an end-effector about a remote center of motion (RCM), with potential application in minimally invasive surgery. A dual-triangular linkage gives the rolling; two Peaucellier–Lipkin straight-line linkages and a dual-helical joint give the spinning and insertion. The kinematics are in closed form, and on a preliminary prototype the end-effector's axis passed on average 0.54 mm from the RCM point.">
+  <meta name="citation_title" content="Design and Validation of A Novel Planar 2R1T Remote Center-of-motion Mechanism Composing of Dual-Triangular and Straight-Line Linkages">
+  <meta name="citation_author" content="Genliang Chen">
+  <meta name="citation_author" content="Yuanhao Xun">
+  <meta name="citation_author" content="Yuchen Chai">
+  <meta name="citation_author" content="Siyue Yao">
+  <meta name="citation_author" content="Chao Chen">
+  <meta name="citation_author" content="Hao Wang">
+  <meta name="citation_publication_date" content="2021/09/02">
+  <meta name="citation_journal_title" content="Journal of Mechanisms and Robotics">
+  <meta name="citation_firstpage" content="1">
+  <meta name="citation_lastpage" content="11">
+  <meta name="citation_publisher" content="ASME International">
+  <meta name="citation_doi" content="10.1115/1.4052339">
+  <meta property="og:title" content="Planar 2R1T RCM Mechanism">
+  <meta property="og:description" content="A dual-triangular linkage, two Peaucellier–Lipkin straight-line linkages and a dual-helical joint roll, spin and insert an end-effector about a remote center of motion (RCM).">
+  <meta property="og:image" content="https://planar-2r1t-rcm-mechanism.github.io/hero.jpg">
+  <meta property="og:url" content="https://planar-2r1t-rcm-mechanism.github.io/">
+  <link rel="canonical" href="https://planar-2r1t-rcm-mechanism.github.io/">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23131312'/%3E%3Ctext x='32' y='44' text-anchor='middle' fill='%23ebe8e1' font-family='Georgia' font-size='36'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap"></noscript>
+  <style>
+/* Shared styles for Siyue Yao's project pages.
+   Distilled from the Compliant Wrist, Fluorescent Whisker, FBG Whisker and UMI-Underwater pages:
+   a black opening, light reading sections, and Newsreader italics as the serif accent.
+   Each page sets --accent and --accent-hero on <body>. */
+:root {
+  --ink: #242523;
+  --muted: #6d7069;
+  --line: #e3e5df;
+  --wash: #f7f8f5;
+  --accent: #80611e;
+  --accent-hero: #efc985;
+  --max: 1040px;
+  --read: 800px;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: #fff; color: var(--ink); font: 17px/1.75 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-underline-offset: 4px; text-decoration-color: #b4b8ac; }
+a:hover { color: var(--accent); }
+button { font: inherit; cursor: pointer; }
+a, button, summary { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, summary:focus-visible, pre:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+img, video { display: block; max-width: 100%; height: auto; }
+video { width: 100%; background: #090b08; }
+h1, h2, h3, h4, p, figure { margin: 0; }
+h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -0.035em; }
+p + p { margin-top: 18px; }
+sup { font-size: 0.65em; line-height: 0; vertical-align: super; }
+sub { line-height: 0; }
+strong { font-weight: 600; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; top: -80px; left: 20px; z-index: 40; padding: 8px 15px; background: #fff; color: var(--ink); }
+.skip:focus { top: 10px; }
+
+/* ---------- Opening (both styles) ---------- */
+.hero { position: relative; background: #000; color: #f4f4f1; }
+.hero-nav { position: absolute; inset: 0 0 auto; z-index: 3; display: flex; justify-content: flex-end; gap: 20px; padding: 22px 5vw; font-size: 13px; line-height: 24px; }
+.hero-nav a { color: #efefed; text-decoration: none; }
+.hero-nav a:hover { color: var(--accent-hero); }
+.eyebrow { margin-bottom: 18px; font-size: 11px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); }
+.hero .eyebrow { color: var(--accent-hero); }
+.hero h1 { font-weight: 600; letter-spacing: -0.045em; text-wrap: balance; }
+.title-main { display: block; font-size: clamp(40px, 4.4vw, 72px); line-height: 1.04; }
+.title-detail { display: block; margin-top: 18px; font-size: clamp(18px, 1.5vw, 23px); font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: #e6e6e2; }
+.hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; font-size: 12px; line-height: 1.7; color: #d1d1ce; }
+.hero-foot p { margin: 0; }
+.hero-foot a { color: inherit; }
+.motion { flex-shrink: 0; padding: 4px 12px; border: 1px solid #cccec7; border-radius: 20px; background: transparent; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.motion:hover { border-color: var(--ink); color: var(--ink); }
+.hero .motion { border-color: #888; background: #0006; color: #eee; }
+.hero .motion:hover { border-color: #fff; color: #fff; }
+.hero a:focus-visible, .hero button:focus-visible { outline-color: var(--accent-hero); }
+
+/* Full-screen opening: the clip covers the first screen; the title sits over a quiet area.
+   .is-split keeps the clip on the left 64% and fades it into black under the title. */
+.hero--cover .hero-frame { position: relative; isolation: isolate; height: 100svh; min-height: 640px; overflow: hidden; }
+.hero--cover .hero-media { position: absolute; inset: 0; z-index: -2; background: #000; }
+.hero--cover .hero-media video { width: 100%; height: 100%; object-fit: cover; object-position: var(--hero-pos, 50% 50%); background: #000; }
+.hero--cover .hero-frame::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(0, 0, 0, 0.38), transparent 26%, transparent 70%, rgba(0, 0, 0, 0.62)); }
+.hero--cover .hero-heading { position: absolute; top: clamp(84px, 11svh, 124px); right: 5vw; width: min(44vw, 780px); text-shadow: 0 2px 16px #000b; }
+.hero--cover.is-split .hero-media { right: 36%; }
+.hero--cover.is-split .hero-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 62%, #000); }
+.hero--cover.is-split .hero-heading { width: min(32vw, 560px); }
+.hero--cover .hero-foot { position: absolute; left: 5vw; right: 5vw; bottom: 24px; }
+.hero-explore { position: absolute; bottom: 26px; left: 50%; z-index: 1; display: inline-flex; align-items: center; gap: 24px; padding-bottom: 7px; transform: translateX(-50%); border-bottom: 1px solid #aaa; color: #fff; font-size: 13px; text-decoration: none; }
+.hero-explore:hover { border-color: var(--accent-hero); color: var(--accent-hero); }
+
+/* Framed opening: title on black, the clip below at no more than its own width. */
+.hero--stage { padding: 82px 24px 0; }
+.hero--stage .hero-heading { max-width: 980px; margin: 0 auto; text-align: center; }
+.hero--stage .title-main { font-size: clamp(34px, 3.6vw, 54px); line-height: 1.1; }
+.hero-stage-media { position: relative; width: 100%; max-width: min(var(--max), var(--media-w, var(--max))); margin: 34px auto 0; }
+.hero-stage-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, #000, transparent 5%, transparent 95%, #000), linear-gradient(180deg, #000, transparent 8%, transparent 92%, #000); }
+.hero-stage-media.is-light::after { display: none; }
+.hero-stage-media img { width: 100%; }
+.hero-stage-media.is-light :is(video, img) { outline: 1px solid #ffffff2e; }
+.hero--stage .hero-foot { max-width: min(var(--max), var(--media-w, var(--max))); margin: 12px auto 0; }
+
+/* Authors band under either opening */
+.hero-meta { max-width: 1100px; margin: 0 auto; padding: 36px 24px 44px; text-align: center; }
+.authors { margin: 0 auto; font-size: 16px; line-height: 1.85; }
+.authors a { text-decoration: none; }
+.hero .authors a:hover { color: #fff; text-decoration: underline; }
+.affiliations { margin-top: 10px; font-size: 14px; color: #c0c0bd; }
+.venue { margin-top: 10px; font-size: 13px; font-style: italic; color: #aaa; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px; }
+.button { display: inline-flex; align-items: center; gap: 16px; padding: 9px 20px; border: 1px solid #555; border-radius: 24px; background: #151515; color: #eee; font-size: 13px; line-height: 1.5; text-decoration: none; }
+.button:first-child { border-color: #f4f4f1; background: #f4f4f1; color: #20211e; }
+.button:hover { border-color: #ddd; background: #252525; color: #fff; }
+.button:first-child:hover { background: #fff; color: #000; }
+
+/* ---------- Page body ---------- */
+.section-nav { position: sticky; top: 0; z-index: 20; display: flex; justify-content: center; gap: 26px; overflow-x: auto; padding: 16px 24px; border-block: 1px solid var(--line); background: #ffffffed; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); scrollbar-width: none; }
+.section-nav::-webkit-scrollbar { display: none; }
+.section-nav a { flex-shrink: 0; font-size: 12px; white-space: nowrap; text-decoration: none; color: var(--muted); }
+.section-nav a.active { color: var(--accent); }
+.section { padding: 84px 30px; }
+.section.soft { background: var(--wash); }
+.section:not(.soft) + .section:not(.soft) { border-top: 1px solid var(--line); }
+.wide { max-width: var(--max); margin-left: auto; margin-right: auto; }
+.reading { max-width: var(--read); margin-left: auto; margin-right: auto; }
+.reading + .wide, .wide + .reading, .wide + .wide, .reading + .reading { margin-top: 32px; }
+h2 { margin-bottom: 14px; font-size: clamp(31px, 3.1vw, 42px); font-weight: 600; }
+h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+h3 { margin: 36px 0 14px; font-size: 24px; font-weight: 600; }
+.question { margin: 0 0 26px; font: italic 400 22px/1.45 var(--serif); letter-spacing: -0.01em; color: #6a6d66; }
+.statement { padding: 88px 30px 72px; text-align: center; }
+.statement .lead { max-width: 760px; margin: 22px auto 0; font-size: 22px; line-height: 1.6; color: #474c43; }
+.statement .lead + p { margin-top: 20px; color: #5e645a; }
+.note { margin-top: 24px; padding-left: 14px; border-left: 2px solid var(--line); font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+/* Media blocks */
+figcaption { font-size: 13px; line-height: 1.65; color: var(--muted); }
+.figure-foot { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-top: 12px; }
+.figure-foot > span { flex: 1; }
+.clip > figcaption:not(.figure-foot) { margin-top: 12px; }
+/* A figure fits on one screen below the sticky nav (a tall one keeps its proportions, centred); click for the large view.
+   Multiplied onto the section behind it, so the white it is drawn on takes the section's colour (the large view keeps white). */
+.paper-fig img { width: 100%; max-height: max(320px, calc(100svh - 200px)); object-fit: contain; mix-blend-mode: multiply; }
+.paper-fig figcaption { margin-top: 12px; text-align: center; }
+.zoom { display: block; cursor: zoom-in; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+/* .pair.match: each item grows in proportion to its media's aspect ratio (--ar = width / height on the item),
+   so the two images or clips come out the same height */
+.pair.match { display: flex; align-items: flex-start; }
+.pair.match > * { flex: var(--ar, 1) 1 0; min-width: 0; }
+.strip { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: 14px; }
+.strip img { width: 100%; aspect-ratio: var(--ratio, 4 / 5); object-fit: cover; border-radius: 3px; background: #0b0b0b; }
+.strip--contain img { object-fit: contain; }
+.strip--scroll { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 190px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding-bottom: 10px; scrollbar-width: thin; }
+.strip--scroll > figure { scroll-snap-align: start; }
+.strip--scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.strip figcaption { margin-top: 8px; font-size: 12px; line-height: 1.5; }
+.strip figcaption b { display: block; font-size: 13px; font-weight: 600; color: var(--ink); }
+.strip + .strip-caption { margin-top: 14px; }
+.strip-caption { font-size: 13px; text-align: center; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); padding: 22px 0; border-block: 1px solid var(--line); }
+.stat { padding: 6px 12px; text-align: center; }
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat b { display: block; font-size: 30px; font-weight: 500; line-height: 1.2; letter-spacing: -0.04em; color: #2c2e2a; }
+.stat span { display: block; margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 22px; padding: 28px 0; border-block: 1px solid var(--line); }
+.steps > div { padding: 0 20px; }
+.steps > div > span { font-size: 12px; color: var(--accent); }
+.steps h4 { margin: 10px 0; font-size: 22px; font-weight: 500; }
+.steps p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+.steps > .arrow { align-self: center; font-size: 24px; color: #aeb4a7; }
+.tabs { display: flex; gap: 26px; margin-bottom: 20px; overflow-x: auto; border-bottom: 1px solid #cacfc3; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button { flex-shrink: 0; margin-bottom: -1px; padding: 12px 0; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); font-size: 14px; white-space: nowrap; }
+.tabs button[aria-selected="true"] { border-bottom-color: var(--accent); color: var(--ink); }
+.tab-panel:not([hidden]) + .tab-panel { margin-top: 36px; }
+.tab-panel > p { max-width: var(--read); margin: 16px auto 0; font-size: 15px; }
+.evidence { border-block: 1px solid var(--line); }
+.evidence summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0; font-size: 14px; font-weight: 500; list-style: none; cursor: pointer; }
+.evidence summary::-webkit-details-marker { display: none; }
+.evidence summary::after { content: "+"; font-size: 20px; font-weight: 400; color: var(--muted); }
+.evidence[open] summary::after { content: "−"; }
+.evidence > :not(summary) { margin-bottom: 24px; }
+.evidence + .evidence { border-top: 0; }
+
+/* Data tables (values from the paper's tables): .table-wrap scrolls sideways on narrow screens */
+.table-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
+.table-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.data-table th, .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--line); text-align: right; }
+.data-table td { white-space: nowrap; }
+.data-table th:first-child, .data-table td:first-child { padding-left: 0; text-align: left; }
+.data-table th:last-child, .data-table td:last-child { padding-right: 0; }
+.data-table thead th { border-bottom-color: #cacfc3; font-size: 12px; font-weight: 600; line-height: 1.4; color: var(--muted); vertical-align: bottom; }
+.data-table tbody th { font-weight: 500; }
+.table-fig figcaption { margin-top: 12px; text-align: center; }
+/* .grouped: one tbody per group, its name in a th spanning the group's rows (scope="rowgroup"); lines only between
+   groups. .fit: only as wide as the columns, centred. */
+.data-table.grouped tbody tr > * { padding-top: 6px; padding-bottom: 6px; border-bottom: 0; }
+.data-table.grouped tbody tr:first-child > * { padding-top: 14px; }
+.data-table.grouped tbody tr:last-child > * { padding-bottom: 14px; }
+.data-table.grouped tbody + tbody tr:first-child > * { border-top: 1px solid var(--line); }
+.data-table.grouped tbody th[rowspan] { font-weight: 600; vertical-align: top; }
+.data-table.grouped tbody td:first-of-type { padding-left: 14px; color: var(--muted); text-align: right; }
+.data-table.fit { width: auto; margin: 0 auto; }
+.data-table.fit th, .data-table.fit td { padding-right: 26px; padding-left: 26px; }
+.data-table.fit th:first-child, .data-table.fit td:first-child { padding-left: 0; }
+.data-table.fit th:last-child, .data-table.fit td:last-child { padding-right: 0; }
+/* A table with color blocks of the same shares beside it (.heatmap, e.g. a classifier's results). Both are .data-table
+   with the same header rows ("Identified as" over the classes: th.axis), so their rows line up; the rows are taller
+   here, so the blocks come out square. A block is the palette's light end mixed toward its dark end by its share
+   (--v, 0 to 1), with rounded corners and a gap around it; th.axis-rows titles the rows, turned to read upward. */
+.table-pair { display: grid; grid-template-columns: minmax(0, 470px) auto; justify-content: center; align-items: start; gap: 64px; }
+.table-pair .data-table tbody th, .table-pair .data-table tbody td { padding-top: 15px; padding-bottom: 15px; }
+.data-table thead tr:not(:last-child) th { padding-bottom: 6px; }
+.data-table thead th:empty { border-bottom-color: transparent; }
+.data-table thead th.axis { font-size: 11px; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
+.heatmap { --hm-low: #e9f2f5; --hm-high: #14527a; width: auto; }
+.heatmap th, .heatmap td, .heatmap thead th { border-bottom-color: transparent; }
+.heatmap thead th + th { padding-right: 0; padding-left: 0; text-align: center; }
+.heatmap tbody th:not(.axis-rows) { padding-right: 10px; padding-left: 0; font-size: 12px; line-height: 21px; color: var(--muted); text-align: right; }
+/* The rows' title is ordinary text turned 90° in a column of its own: vertical writing-mode in a narrow cell wraps and
+   overflows in Safari. */
+.heatmap th.axis-rows { position: relative; width: 28px; padding: 0; }
+.heatmap th.axis-rows span { position: absolute; top: 50%; left: 50%; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; line-height: 1.4; color: var(--muted); text-transform: uppercase; white-space: nowrap; transform: translate(-50%, -50%) rotate(-90deg); }
+.heatmap td { position: relative; z-index: 0; width: 52px; padding-right: 0; padding-left: 0; font-size: 13px; font-weight: 500; line-height: 21px; color: #33404a; text-align: center; }
+.heatmap td::before { content: ""; position: absolute; inset: 2px; z-index: -1; border-radius: 5px; background: color-mix(in oklab, var(--hm-high) calc(var(--v, 0) * 100%), var(--hm-low)); }
+.heatmap td.dark { color: #fff; }
+
+/* Beyond the paper */
+.beyond .eyebrow { color: var(--muted); }
+.beyond .eyebrow::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border: 1px solid currentColor; border-radius: 50%; vertical-align: 1px; }
+
+/* Q&A */
+.qa details { border-top: 1px solid var(--line); }
+.qa details:last-child { border-bottom: 1px solid var(--line); }
+.qa summary { display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; font-size: 16px; font-weight: 500; list-style: none; cursor: pointer; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; color: #999; }
+.qa details[open] summary::after { content: "−"; }
+.qa details p { padding: 0 20px 18px 0; font-size: 15px; line-height: 1.8; color: #555; }
+
+/* Paper & citation */
+.paper-title { margin-top: 8px; font-size: 21px; font-weight: 500; line-height: 1.5; }
+.section .venue { color: var(--muted); }
+.paper-links { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 20px; }
+.text-link { font-size: 14px; color: var(--accent); }
+.citation { margin-top: 32px; }
+.citation-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin: 4px 0 12px; font-size: 13px; color: var(--accent); }
+.citation-copy { padding: 6px 15px; border: 1px solid #c8ccc3; border-radius: 20px; background: #fff; color: var(--ink); font-size: 12px; line-height: 1.6; }
+.citation-copy:hover { border-color: var(--accent); color: var(--accent); }
+.citation-status { min-height: 1.6em; font-size: 13px; color: var(--muted); }
+.citation pre { max-width: 100%; margin: 8px 0 24px; padding: 18px 20px; overflow-wrap: anywhere; white-space: pre-wrap; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: #4a4e45; font: 12px/1.75 var(--mono); tab-size: 2; }
+.affiliation-list { padding-left: 22px; font-size: 14px; line-height: 1.7; }
+.affiliation-list li { padding: 4px 0; }
+.small { font-size: 13px; }
+.credit { margin-top: 28px; font-size: 12px; line-height: 1.6; color: var(--muted); }
+
+/* Full video */
+.chapters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin-top: 18px; }
+.chapters button { padding: 4px 0; border: 0; border-bottom: 1px solid #c8ccc3; background: none; color: #4e5746; font-size: 12px; }
+.chapters button:hover { border-color: var(--accent); color: var(--accent); }
+.chapters span { margin-right: 6px; color: #858b7d; font-variant-numeric: tabular-nums; }
+
+/* Related & footer */
+.related-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.related-list a { display: block; height: 100%; padding: 16px 18px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; }
+.related-list a:hover { border-color: var(--accent); }
+.related-list b { display: block; font-size: 15px; font-weight: 600; line-height: 1.35; }
+.related-list span { display: block; margin-top: 6px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.footer { display: flex; justify-content: flex-end; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 30px 32px 42px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+.footer a { text-decoration: none; }
+.footer p { margin: 0; }
+
+/* Lightbox */
+dialog { width: calc(100vw - 48px); max-width: 1400px; max-height: calc(100vh - 48px); padding: 30px; overflow: auto; border: 0; background: #fff; }
+dialog::backdrop { background: #171d15e8; }
+dialog img { width: auto; max-width: 100%; margin: 0 auto; }
+.close-lightbox { position: sticky; top: 0; z-index: 1; display: block; margin: -16px -16px 4px auto; padding: 5px 10px; border: 0; background: #fff; color: #323c2a; font-size: 28px; line-height: 1; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero--cover .hero-frame { min-height: 640px; }
+  .hero--cover.is-split .hero-media { right: 0; }
+  .hero--cover.is-split .hero-media::after { display: none; }
+  .hero--cover .hero-media video { object-position: var(--hero-pos-mobile, var(--hero-pos, 50% 50%)); }
+  .hero--cover .hero-frame::after { background: linear-gradient(180deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.05) 24%, rgba(0, 0, 0, 0.45) 48%, rgba(0, 0, 0, 0.9) 74%, rgba(0, 0, 0, 0.96)); }
+  .hero--cover .hero-heading, .hero--cover.is-split .hero-heading { top: auto; right: 32px; bottom: 150px; left: 32px; width: auto; max-width: 640px; }
+  .hero-explore { bottom: 92px; left: 32px; transform: none; }
+  .hero-nav { padding: 20px 32px; }
+  .hero--cover .hero-foot { right: 32px; left: 32px; }
+  .trio { grid-template-columns: 1fr; }
+  .table-pair { grid-template-columns: minmax(0, 470px); gap: 28px; }
+  .heatmap { justify-self: center; }
+}
+@media (max-width: 800px) {
+  .desktop-break { display: none; }
+  .authors { font-size: 14px; }
+  .affiliations { font-size: 12px; }
+  .section-nav { justify-content: flex-start; gap: 22px; }
+  .section { padding: 62px 24px; }
+  .statement { padding: 62px 24px 52px; }
+  .statement .lead { font-size: 20px; }
+  .stat b { font-size: 26px; }
+  .footer { flex-wrap: wrap; }
+  .footer p { order: 3; width: 100%; text-align: center; }
+}
+@media (max-width: 650px) {
+  .hero--cover .hero-heading, .hero--cover.is-split .hero-heading { right: 24px; left: 24px; }
+  .title-main { font-size: clamp(36px, 10vw, 52px); }
+  .title-detail { margin-top: 14px; font-size: 17px; }
+  .hero-explore { left: 24px; font-size: 12px; }
+  .hero--cover .hero-foot { right: 24px; bottom: 20px; left: 24px; font-size: 11px; }
+  .hero-nav { padding: 16px 24px; font-size: 12px; }
+  .hero--stage { padding: 72px 16px 0; }
+  .hero-meta { padding: 28px 20px 32px; }
+  .actions { gap: 8px; }
+  .button { gap: 12px; padding: 8px 13px; font-size: 12px; }
+  .pair { grid-template-columns: 1fr; }
+  .pair.match { flex-direction: column; }
+  .pair.match > * { flex: none; width: 100%; }
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip--scroll { grid-template-columns: none; grid-auto-columns: 150px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; }
+  .stat + .stat { border-left: 0; }
+  .stat:nth-child(even) { border-left: 1px solid var(--line); }
+  .steps { grid-template-columns: 1fr; gap: 18px; }
+  .steps > .arrow { display: none; }
+  .figure-foot { flex-wrap: wrap; gap: 10px; }
+  .figure-foot > span { flex-basis: 100%; }
+  .figure-foot .motion { margin-left: auto; }
+}
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  h2 { font-size: 29px; }
+  .question { font-size: 20px; }
+  .section { padding: 50px 20px; }
+  .tabs { gap: 20px; }
+  .tabs button { font-size: 13px; }
+  .chapters { justify-content: flex-start; gap: 10px 18px; }
+  .data-table { font-size: 13px; }
+  .heatmap td { width: 50px; font-size: 12px; }
+  dialog { width: calc(100vw - 22px); padding: 28px 10px 10px; }
+  .citation pre { padding: 14px 12px; font-size: 11px; }
+}
+@media (max-height: 600px) and (min-width: 901px) {
+  .hero--cover .hero-frame { min-height: 540px; }
+  .hero--cover .hero-heading { top: 76px; }
+  .title-main { font-size: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+  </style>
+</head>
+<body style="--accent:#a3302e; --accent-hero:#ff9e98">
+  <a class="skip" href="#overview">Skip to content</a>
+
+  <header class="hero hero--stage" style="--media-w:940px">
+    <nav class="hero-nav" aria-label="Site">
+      <a href="https://doi.org/10.1115/1.4052339">Paper ↗</a>
+    </nav>
+    <div class="hero-heading">
+      <p class="eyebrow">Mechanism analysis</p>
+      <h1><span class="title-main">Planar 2R1T RCM Mechanism</span><span class="title-detail">Design and Validation of a Novel Planar 2R1T Remote <span style="white-space:nowrap">Center-of-Motion</span> Mechanism Composing of <span style="white-space:nowrap">Dual-Triangular</span> and <span style="white-space:nowrap">Straight-Line</span> Linkages</span></h1>
+    </div>
+    <div class="hero-stage-media">
+      <a class="zoom" href="fig-11-prototype.webp"><img src="fig-11-prototype.webp" width="2000" height="1271" fetchpriority="high" alt="Figure 11(b): a photo, on black, of the prototype: a frame of silver links rising from a clear acrylic base, a linear module with a servo motor on the left, two more motors behind the base, and on the right a vertical screw carrying a white holder with three grey spheres. Yellow labels name the servo motor, the linear module, a capstan wheel, the servo motors and the RCM point; blue arrows mark a frame u, v, w at T on the holder and the axes x, y, z at the RCM point, where a red dashed line along the screw meets another from the base." aria-describedby="hero-caption"></a>
+    </div>
+    <div class="hero-foot">
+      <p id="hero-caption">Fig. 11(b): the prototype. A servo motor and a linear module, at left, drive the dual-triangular linkage; two more servo motors on the base drive the straight-line linkages through cables over capstan wheels. Three reflectors, M<sub>1</sub>–M<sub>3</sub>, on the end-effector carry its tool frame, and the end-effector's axis (red, dashed) passes through the RCM point.</p>
+    </div>
+    <div class="hero-meta">
+      <p class="authors">Genliang&nbsp;Chen<sup>1,*</sup>, Yuanhao&nbsp;Xun<sup>1</sup>, Yuchen&nbsp;Chai<sup>1</sup>, Siyue&nbsp;Yao<sup>1</sup>, Chao&nbsp;Chen<sup>2</sup>, Hao&nbsp;Wang<sup>1</sup></p>
+      <p class="affiliations"><sup>1</sup>&nbsp;Shanghai&nbsp;Jiao&nbsp;Tong&nbsp;University&nbsp;&nbsp;·&nbsp; <sup>2</sup>&nbsp;Monash&nbsp;University&nbsp;&nbsp;·&nbsp; <sup>*</sup>&nbsp;Corresponding&nbsp;author</p>
+      <p class="venue">Journal of Mechanisms and Robotics, 2021</p>
+      <div class="actions">
+        <a class="button" href="https://doi.org/10.1115/1.4052339">Paper <span aria-hidden="true">↗</span></a>
+        <a class="button" href="#experiments">Experiments <span aria-hidden="true">↓</span></a>
+        <a class="button" href="#citation">BibTeX</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="section-nav" aria-label="On this page">
+    <a href="#overview">Overview</a><a href="#why">Why</a><a href="#design">Design</a><a href="#kinematics">Kinematics</a><a href="#workspace">Workspace</a><a href="#prototype">Prototype</a><a href="#experiments">Experiments</a><a href="#paper">Paper</a>
+  </nav>
+
+  <main>
+    <section class="section statement" id="overview">
+      <div class="reading">
+        <p class="eyebrow">The idea</p>
+        <h2>Rolling, spinning and insertion<br><em>about one fixed point.</em></h2>
+        <p class="lead">A planar mechanism moves its end-effector about a fixed point far from its base, its remote center of motion (RCM): the end-effector rolls about the RCM point, spins about its own axis through it, and slides along that axis for insertion. These are two rotations and one translation, 2R1T.</p>
+        <p>It is driven by three linkages with one degree of freedom each, one motor per linkage. A dual-triangular linkage rolls the end-effector; two Peaucellier–Lipkin straight-line linkages move two nuts along its axis, where a dual-helical joint turns their motions into spinning and insertion. Rolling is decoupled from spinning and insertion, and the kinematics are in closed form. On a preliminary prototype, measured in 121 configurations, the end-effector's axis passed on average 0.54&nbsp;mm from the RCM point. With a revolute joint added for pitch, the design can be extended to a spatial 3R1T mechanism, with potential application in robot-assisted minimally invasive surgery.</p>
+      </div>
+    </section>
+
+    <section class="section soft" id="why">
+      <div class="reading">
+        <p class="eyebrow">01 / Background</p>
+        <h2>Minimally invasive surgery<br><em>needs four motions about one point.</em></h2>
+        <p class="question">What must an RCM mechanism provide, and where do existing ones fall short?</p>
+        <p>In minimally invasive surgery, a surgical instrument enters the body through a small incision and moves about the incision point (Fig.&nbsp;1): it rolls and pitches about the point, spins about its own axis, and slides along it for insertion. These are four motions, three rotations and one translation: 3R1T. RCM mechanisms provide them by constraining the end-effector mechanically to a fixed point far from the mechanism's fixed base.</p>
+        <p>Many RCM mechanisms have been proposed, from planar linkages built on parallelograms to spatial parallel mechanisms. Most have fewer than four degrees of freedom, so extra actuators must be mounted on the end-effector to reach 3R1T; the structure becomes complex, and the inertia of the moving parts rises considerably. The few fully parallel mechanisms with four degrees of freedom keep all their actuators on the fixed base, but their parallel structure takes up much space.</p>
+        <p>Pitch can come from a revolute joint on the fixed base, driven directly. This design therefore covers the other three motions, rolling, spinning and insertion (2R1T), with a planar mechanism, and splits them among simple linkages with one degree of freedom each.</p>
+      </div>
+      <figure class="reading paper-fig" style="max-width:471px"><a class="zoom" href="fig-1-mis-motions.webp"><img src="fig-1-mis-motions.webp" width="471" height="393" loading="lazy" alt="Figure 1: a thin surgical instrument passing through a small incision in a curved body surface, inside a dashed double cone whose apex is the incision point; red arrows mark roll and pitch above the body, insertion along the instrument and spin at its tip below."></a><figcaption>Fig. 1: the motions of minimally invasive surgery: a surgical instrument through the incision point in the body rolls, pitches and spins, and moves along its axis for insertion.</figcaption></figure>
+    </section>
+
+    <section class="section" id="design">
+      <div class="reading">
+        <p class="eyebrow">02 / Mechanism design</p>
+        <h2>Rolling from one linkage,<br><em>spinning and insertion from two.</em></h2>
+        <p class="question">Which part of the mechanism makes which motion?</p>
+        <p>The mechanism is built from three subchains (Fig.&nbsp;2). A dual-triangular linkage, mounted on the fixed base, rolls the end-effector about the RCM point, about the z-axis. Two identical straight-line linkages, carried at the distal end of the dual-triangular linkage, move along one line through the RCM point. On that line, a dual-helical joint turns their two translations into the end-effector's spinning about the line and insertion along it.</p>
+        <p>The straight-line linkages move independently of the dual-triangular linkage, so the end-effector's rolling is decoupled from its spinning and insertion, which eases the kinematic control. And the dual-helical joint relates spinning and insertion to its two inputs by a constant transmission ratio, which simplifies the control further.</p>
+      </div>
+      <figure class="wide paper-fig" style="max-width:940px"><a class="zoom" href="fig-2-concept.webp"><img src="fig-2-concept.webp" width="2000" height="905" loading="lazy" alt="Figure 2: on the left, a rendering of the mechanism: a light green linkage of parallelograms rising from a grey base, a yellow platform at its top, and a blue and a red rhombus-shaped linkage reaching to an orange screw that runs down through the RCM point, where x, y and z axes meet; arrows mark roll about the point, insertion and spin along the screw, the direction of the end-effector with its u, v, w frame, and pitch about the dashed line through the base. On the right, the parts drawn apart: the dual-triangular linkage in green, a straight-line linkage in blue and one in red, and the dual-helical joint, an orange screw with a right-hand and a left-hand thread and two green nuts."></a><figcaption>Fig. 2: the conceptual design: the dual-triangular linkage (green) on the base, two straight-line linkages (blue and red) on its platform (yellow), and the dual-helical joint on the end-effector's axis through the RCM point; roll, spin and insertion are marked, and pitch about the line through the base and the RCM point. Right, the three subchains apart: the dual-triangular linkage, the straight-line linkages, and the dual-helical joint with a right-hand and a left-hand screw.</figcaption></figure>
+      <div class="reading">
+        <p>The <strong>dual-triangular linkage</strong> is an eight-bar linkage with a symmetric structure (Fig.&nbsp;3). With eight links and ten joints, its mobility is <span style="white-space:nowrap">f = 3 × (8 − 1) − 2 × 10 = 1</span>: one degree of freedom. Its configurations stay symmetric about the line ED, and the triangles OAD and OBE stay similar, so the line DE always passes through the point O, the RCM point; by the symmetry, so does the distal link HG. Since all its links stay far from O, the linkage is widely used to roll the end-effector of RCM mechanisms. Here the distal link HG is replaced by a platform IKG that carries the straight-line linkages, with IK as their base: they move along the line OT, perpendicular to IK through O, which turns purely about O as the linkage moves.</p>
+        <p>The <strong>dual-helical joint</strong> realizes a cylindrical drive, or C-drive (Fig.&nbsp;4): a differential mechanism that turns two collinear translations, of two nuts on one screw, into a rotation and a translation about the same axis. Ideally its two helical joints have opposite pitches, equal in size and of opposite hand: when the nuts move in the same direction at the same rate, the screw translates; when they move in opposite directions, it rotates. It works whenever the two pitches differ. In the prototype, one pitch is zero, which turns that helical joint into a revolute joint, simple to build with ball bearings.</p>
+        <p>Each nut is driven along the axis by a <strong>Peaucellier–Lipkin straight-line linkage</strong> (Fig.&nbsp;5), an eight-bar linkage with one degree of freedom as well. When its crank IR turns, its output point P moves on an exact straight line perpendicular to its base link IK, provided its link lengths satisfy <span style="white-space:nowrap">l<sub>IR</sub> = l<sub>IK</sub></span>, <span style="white-space:nowrap">l<sub>KM</sub> = l<sub>KN</sub></span> and <span style="white-space:nowrap">l<sub>PM</sub> = l<sub>PN</sub> = l<sub>RM</sub> = l<sub>RN</sub></span>. Its base link is the platform's IK, so P moves along OT, through the RCM point. Two identical straight-line linkages drive the two nuts (Fig.&nbsp;7); since their outputs lie on the axis of the dual-helical joint, their transmission angle stays at 90° in theory, and force passes well from the cranks to the joint.</p>
+      </div>
+      <div class="wide">
+        <div class="tabs" role="tablist" aria-label="The three subchains">
+          <button id="tab-dual-triangular" role="tab" aria-selected="true" aria-controls="panel-dual-triangular">Dual-triangular linkage</button>
+          <button id="tab-dual-helical" role="tab" aria-selected="false" aria-controls="panel-dual-helical">Dual-helical joint</button>
+          <button id="tab-straight-line" role="tab" aria-selected="false" aria-controls="panel-straight-line">Straight-line linkage</button>
+        </div>
+        <div class="tab-panel" id="panel-dual-triangular" role="tabpanel" aria-labelledby="tab-dual-triangular">
+          <figure class="wide paper-fig" style="max-width:420px"><a class="zoom" href="fig-3-dual-triangular.webp"><img src="fig-3-dual-triangular.webp" width="1664" height="1199" loading="lazy" alt="Figure 3: a line drawing of the dual-triangular linkage in green on a fixed base BA, with joints at C, D, E, F and G, an orange triangular platform IKG at the top with H on its side, and the origin O of an x, y frame on the line through B and A; a red dashed line runs from E through D to O, blue dashed lines join O to A, G and T and run from K to T, with a right angle at T, and a dotted arc runs from A to G."></a><figcaption>Fig. 3: the dual-triangular linkage on its base BA. The line DE (red, dashed) passes through the RCM point O; the platform IKG (orange) replaces the distal link HG, and the line OT, perpendicular to IK, turns about O.</figcaption></figure>
+        </div>
+        <div class="tab-panel" id="panel-dual-helical" role="tabpanel" aria-labelledby="tab-dual-helical">
+          <figure class="wide paper-fig" style="max-width:540px">
+            <div class="pair match">
+              <a class="zoom" style="--ar:0.5027" href="fig-4-c-drive.webp"><img src="fig-4-c-drive.webp" width="372" height="740" loading="lazy" alt="Figure 4: a grey drawing of a screw with two nuts on it, labeled nuts, moving down by d1 and d2, and a gripper at the screw's lower end, which turns by θ and moves along u."></a>
+              <a class="zoom" style="--ar:1.4350" href="fig-7-dual-helical.webp"><img src="fig-7-dual-helical.webp" width="1214" height="846" loading="lazy" alt="Figure 7: two straight-line linkages, one red and one blue, sharing the fixed link IK; their cranks end at R1 and R2, at an angle θi below IK, and their outputs, P1 (a yellow block) and P2 (a green block), sit on an orange screw that runs vertically through T, where l marks the insertion and φ the spin."></a>
+            </div>
+            <figcaption>Fig. 4 (left): the C-drive: moving its two nuts by d<sub>1</sub> and d<sub>2</sub> turns the screw by θ and moves it along u. Fig. 7 (right): two straight-line linkages (red and blue) on the base IK move P<sub>1</sub> and P<sub>2</sub>, the two nuts of the dual-helical joint, along its axis, which gives the spin φ and the insertion l.</figcaption>
+          </figure>
+        </div>
+        <div class="tab-panel" id="panel-straight-line" role="tabpanel" aria-labelledby="tab-straight-line">
+          <figure class="wide paper-fig" style="max-width:540px"><a class="zoom" href="fig-5-straight-line.webp"><img src="fig-5-straight-line.webp" width="1288" height="589" loading="lazy" alt="Figure 5: the Peaucellier–Lipkin straight-line linkage drawn in blue: a crank IR turning about I on the fixed link IK, two short links from K to M and N, and a long rhombus R, M, P, N; P lies on a red dashed line perpendicular to IK at O, and a dashed circle around I shows the crank's path."></a><figcaption>Fig. 5: the Peaucellier–Lipkin straight-line linkage: as the crank IR turns about I, the point P moves on the line (red, dashed) through O, perpendicular to the base link IK.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft" id="kinematics">
+      <div class="reading">
+        <p class="eyebrow">03 / Kinematics</p>
+        <h2>Closed-form kinematics,<br><em>linkage by linkage.</em></h2>
+        <p class="question">How do the three drives set the end-effector's motion, and back?</p>
+        <p>The mechanism has three inputs, the drive angles θ<sub>0</sub> of the dual-triangular linkage and θ<sub>1</sub>, θ<sub>2</sub> of the two straight-line linkages, and three outputs, the end-effector's rolling angle θ, spinning angle φ and insertion l (Fig.&nbsp;6). Since each motion comes from its own simple linkage, both the forward and the inverse kinematics are found linkage by linkage, in closed form.</p>
+        <p>Rolling depends on the dual-triangular linkage alone. Its distal link turns purely about the RCM point, by an angle α that is twice the angle ∠BOE: <span style="white-space:nowrap">α = 2 arctan [l<sub>1</sub> sin θ<sub>0</sub> / (l<sub>0</sub> − l<sub>1</sub> cos θ<sub>0</sub>)]</span>, where l<sub>0</sub> and l<sub>1</sub> are the lengths of links OB and BE. The rolling angle θ is α plus a constant offset α<sub>0</sub>, the angle ∠IOT.</p>
+        <p>Spinning and insertion depend on the straight-line linkages alone. Each moves its nut along OT, to a distance from T of <span style="white-space:nowrap">d<sub>i</sub> = l<sub>2</sub> tan (θ<sub>i</sub>/2)</span>, with l<sub>2</sub> the fixed distance from K to T. The dual-helical joint turns the two nut positions into the spinning angle and the insertion through a constant 2 × 2 matrix set by its pitches p<sub>1</sub> and p<sub>2</sub>, its transmission ratio.</p>
+        <p>The inverse kinematics are just as direct: θ<sub>0</sub> follows from the rolling angle, the nut positions from the spinning angle and the insertion through the inverse of that matrix, and each crank angle from its nut's position, all in closed form. The Jacobian that relates the speeds of the drives to those of the end-effector is block diagonal, a 1 × 1 block for rolling and a 2 × 2 block for spinning and insertion: rolling is decoupled from the other two motions, and every entry of the Jacobian is explicit.</p>
+      </div>
+      <figure class="reading paper-fig" style="max-width:440px"><a class="zoom" href="fig-6-kinematics.webp"><img src="fig-6-kinematics.webp" width="1721" height="1395" loading="lazy" alt="Figure 6: the whole mechanism in line drawing: the green dual-triangular linkage on its base B, with the input angle θ0, the link length l1 and the base length l0 to O; its orange platform carries a blue straight-line linkage with the crank IRi at the angle θi, whose output Pi, a green block, lies on the dashed axis u through O, at a distance di from T and d0 from O; at O, the angles α, α0 and θ are marked up to the axis u."></a><figcaption>Fig. 6: the kinematics: the dual-triangular linkage (green), with its input θ<sub>0</sub> and links l<sub>0</sub> and l<sub>1</sub>, sets the end-effector's axis u at the rolling angle θ about O; a straight-line linkage (blue), with its crank angle θ<sub>i</sub>, places the nut P<sub>i</sub> at d<sub>i</sub> from T, which is d<sub>0</sub> from O.</figcaption></figure>
+    </section>
+
+    <section class="section" id="workspace">
+      <div class="reading">
+        <p class="eyebrow">04 / Singularities and workspace</p>
+        <h2>Singular only where<br><em>a linkage reaches a dead point.</em></h2>
+        <p class="question">Where can the mechanism not be controlled, and how far can it roll and insert?</p>
+        <p>A mechanism is singular where its Jacobian loses rank. Here the Jacobian is block diagonal, so the mechanism is singular only where the dual-triangular linkage or a straight-line linkage reaches a dead point. The dual-helical joint adds no singularity: its two pitches differ, so its transmission ratio is constant and invertible.</p>
+        <p>The dual-triangular linkage reaches its dead point at <span style="white-space:nowrap">θ<sub>0</sub> + ½α = ½π</span>, the limit of its motion (Fig.&nbsp;8). At θ<sub>0</sub>&nbsp;=&nbsp;π it would fold into a line and could not be controlled either, but its links interfere before that. The crank of each straight-line linkage is a rocker that cannot turn fully: it moves between two dead points, symmetric about the base link IK and set by the link lengths (Fig.&nbsp;9). Choosing the link lengths for the ranges of motion needed keeps these positions out of the way.</p>
+        <p>Between these limits lies the reachable workspace (Fig.&nbsp;10). The rolling angle covers <span style="white-space:nowrap">θ ∈ [α<sub>0</sub>, α<sub>0</sub> + <u>α</u>]</span>: its stroke <u>α</u> is set by the ratio l<sub>1</sub>/l<sub>0</sub> alone, and the angle α<sub>0</sub> offsets it. With one pitch zero, p<sub>1</sub>&nbsp;=&nbsp;0, a difference of p<sub>2</sub> between the two nuts is reserved for a full turn of spin, so the insertion stroke shrinks to <span style="white-space:nowrap">2<u>d</u> − p<sub>2</sub></span>, where <u>d</u> is the straight-line linkages' travel limit along the end-effector; the initial position d<sub>0</sub> offsets it. The link lengths and pitches can be chosen for the ranges a task needs.</p>
+      </div>
+      <div class="wide pair match" style="max-width:790px">
+        <figure class="paper-fig" style="--ar:1.1905"><a class="zoom" href="fig-8-singular-configurations.webp"><img src="fig-8-singular-configurations.webp" width="2000" height="1680" loading="lazy" alt="Figure 8: the dual-triangular linkage in two configurations. Top, the singular configuration, labeled with θ0 + ½α = π/2: the linkage stretched diagonally from its base B toward the upper right, with a right angle marked at E between BE and the dashed line from E to O. Bottom, the folded configuration, θ0 = π: all links on one line, from E through C (F), D, I, B (H) and A (G), with the platform's corner K above it."></a><figcaption>Fig. 8: the dual-triangular linkage at its singular configuration, θ<sub>0</sub> + ½α = ½π, with a right angle at E (top), and folded into a line at θ<sub>0</sub> = π (bottom).</figcaption></figure>
+        <figure class="paper-fig" style="--ar:1.3337"><a class="zoom" href="fig-9-dead-points.webp"><img src="fig-9-dead-points.webp" width="1167" height="875" loading="lazy" alt="Figure 9: the two straight-line linkages at their dead points, one red and one blue, about the fixed link IK and the orange platform: the red crank IR1 at the angle −θi above IK, the blue crank IR2 at θi below it; in each, the links from K through M1 (N1) or M2 (N2) to P1 or P2 lie on one straight line, of lengths l3 and l4, and P1 (yellow) and P2 (green) sit on the orange screw through T, at the distance l2 from K."></a><figcaption>Fig. 9: the straight-line linkages at the dead points of their cranks, at −<u>θ</u><sub>i</sub> and <u>θ</u><sub>i</sub> to IK, where the links KM and MP, of lengths l<sub>3</sub> and l<sub>4</sub>, fall in line.</figcaption></figure>
+      </div>
+      <figure class="reading paper-fig" style="max-width:480px"><a class="zoom" href="fig-10-workspace.webp"><img src="fig-10-workspace.webp" width="1369" height="1227" loading="lazy" alt="Figure 10: the reachable workspace about the RCM point O on a dashed horizontal line: the end-effector's axis drawn at two angles, from α0 above the line through a further α, each with its screw and nuts; below O, a yellow band between two dashed arcs, from d0 − d + p2 to d0 + d, marks the position limitation, with d0 in between."></a><figcaption>Fig. 10: the reachable workspace: the end-effector's axis rolls through <u>α</u> about the RCM point O, starting at α<sub>0</sub>, and the insertion ranges from d<sub>0</sub> − <u>d</u> + p<sub>2</sub> to d<sub>0</sub> + <u>d</u> (yellow).</figcaption></figure>
+    </section>
+
+    <section class="section soft" id="prototype">
+      <div class="reading">
+        <p class="eyebrow">05 / Prototype</p>
+        <h2>A preliminary prototype,<br><em>with every motor on the base.</em></h2>
+        <p class="question">How was the prototype built, driven and measured?</p>
+        <p>A scaled-down prototype was designed and built from easy-to-access materials with simple fabrication methods (Fig.&nbsp;11). Coupling-supported structures stiffen its links while keeping their inertia low, parts with complex shapes are 3D-printed plastic, and a commercial ball screw and nut form the dual-helical joint.</p>
+        <p>A planar slider-crank mechanism drives the input θ<sub>0</sub> of the dual-triangular linkage; its slider is moved by a linear module with a Maxon RE40 servo motor. The cranks of the straight-line linkages are driven by cables, with capstan wheels carrying the motors' rotation to them. All motors therefore sit on the base frame, and the moving links stay light.</p>
+        <p>An OptiTrack motion-capture system measures the end-effector's pose from three spherically mounted reflectors, M<sub>1</sub>, M<sub>2</sub> and M<sub>3</sub>, set in an equilateral triangle on a plane perpendicular to the end-effector's axis. They define a tool frame {T}: its origin at their center, its v-axis normal to their plane, its u-axis through M<sub>1</sub>. The end-effector's rolling, spinning and insertion are read from this frame.</p>
+        <p>The kinematic parameters were found for a prescribed workspace (Table&nbsp;1): rolling over 70°–120° and insertion over 200–250&nbsp;mm, with the pitches set to p<sub>1</sub>&nbsp;=&nbsp;0&nbsp;mm and p<sub>2</sub>&nbsp;=&nbsp;20&nbsp;mm. The straight-line linkages' range covers the 20&nbsp;mm pitch difference, so the end-effector can spin through full turns. The prototype was not made for a specific procedure: it is a preliminary check of the design, and its workspace may well be smaller than actual minimally invasive surgery requires.</p>
+      </div>
+      <div class="wide pair match">
+        <figure class="paper-fig" style="--ar:1.2114"><a class="zoom" href="fig-11-design.webp"><img src="fig-11-design.webp" width="2000" height="1651" loading="lazy" alt="Figure 11(a): a rendering of the prototype's design: white links with yellow rods and pink wheels rising from a base on a linear module, two grey motors behind the base, and a black screw at the right carrying the outputs P2 and P1; red dashed lines along the screw and through the base meet at the RCM point O."></a><figcaption>Fig. 11(a): the design of the prototype: the outputs P<sub>1</sub> and P<sub>2</sub> of the straight-line linkages lie on the end-effector's axis, which meets the line through the base joints at the RCM point O.</figcaption></figure>
+        <figure class="paper-fig" style="--ar:1.5736"><a class="zoom" href="fig-11-prototype.webp"><img src="fig-11-prototype.webp" width="2000" height="1271" loading="lazy" alt="Figure 11(b): the photo of the prototype on black: silver links on a clear acrylic base, the linear module and servo motor on the left, the capstan wheel and servo motors labeled, and three grey spheres, M1 to M3, on a white holder on the end-effector above the RCM point."></a><figcaption>Fig. 11(b): the prototype, with its servo motors, linear module and capstan wheel labeled, the reflectors M<sub>1</sub>–M<sub>3</sub> of the tool frame, and the RCM point.</figcaption></figure>
+      </div>
+      <figure class="wide table-fig" style="max-width:880px">
+        <div class="table-wrap" tabindex="0" role="region" aria-labelledby="table-1-caption">
+          <table class="data-table fit">
+            <thead>
+              <tr><th scope="col">Parameter</th><th scope="col">l<sub>0</sub></th><th scope="col">l<sub>1</sub></th><th scope="col">l<sub>2</sub></th><th scope="col">l<sub>3</sub></th><th scope="col">l<sub>4</sub></th><th scope="col">r</th><th scope="col">α<sub>0</sub></th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Value</th><td>225&nbsp;mm</td><td>143.75&nbsp;mm</td><td>127.28&nbsp;mm</td><td>30&nbsp;mm</td><td>116.74&nbsp;mm</td><td>1.25</td><td>45°</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="table-1-caption">Table 1: the kinematic parameters of the prototype. l<sub>0</sub> and l<sub>1</sub> are the lengths of links OB and BE of the dual-triangular linkage, l<sub>2</sub> the distance from K to T, l<sub>3</sub> and l<sub>4</sub> the lengths of links KM<sub>i</sub> and M<sub>i</sub>P<sub>i</sub> of the straight-line linkages, and α<sub>0</sub> the angle ∠IOT.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="experiments">
+      <div class="reading">
+        <p class="eyebrow">06 / Experimental validation</p>
+        <h2>Accuracy and repeatability<br><em>over 121 configurations.</em></h2>
+        <p class="question">How closely does the prototype keep its end-effector on the RCM point?</p>
+        <p>For the validation, the prescribed workspace was discretized: the rolling range, 70°–120°, into 11 orientations in steps of 5°, and for each orientation the insertion range, 200–250&nbsp;mm, into 11 positions in steps of 5&nbsp;mm, which gives 11 × 11 = 121 configurations. The inverse kinematics gave each configuration's motor inputs, and a protocol between the motor controller and the OptiTrack system actuated and measured them automatically.</p>
+        <p>In theory, the end-effector's axis passes exactly through the nominal RCM point in every configuration; manufacturing and assembly errors leave no exact common point (Fig.&nbsp;13). Over the 121 configurations, the axis passed the nominal RCM point at a mean distance of 0.54&nbsp;mm, and 1.21&nbsp;mm at most. The rolling angle was off by 0.20° on average and 0.49° at most, evenly across the workspace. The insertion was off by 1.02&nbsp;mm on average and 1.99&nbsp;mm at most, mainly because of the transmission error of the cable drives of the straight-line linkages, which is larger than that of rigid linkages. The repeatability was 0.17&nbsp;mm on average and 0.62&nbsp;mm at most.</p>
+      </div>
+      <div class="wide">
+        <div class="tabs" role="tablist" aria-label="Results">
+          <button id="tab-axis" role="tab" aria-selected="true" aria-controls="panel-axis">Axis to RCM point</button>
+          <button id="tab-rolling" role="tab" aria-selected="false" aria-controls="panel-rolling">Rolling error</button>
+          <button id="tab-insertion" role="tab" aria-selected="false" aria-controls="panel-insertion">Insertion error</button>
+          <button id="tab-repeatability" role="tab" aria-selected="false" aria-controls="panel-repeatability">Repeatability</button>
+        </div>
+        <div class="tab-panel" id="panel-axis" role="tabpanel" aria-labelledby="tab-axis">
+          <div class="pair match">
+            <figure class="paper-fig" style="--ar:1.1282"><a class="zoom" href="fig-13-measured-configurations.webp"><img src="fig-13-measured-configurations.webp" width="977" height="866" loading="lazy" alt="Figure 13: a plot in x and y, in millimeters, of 121 lines that cross near the nominal RCM point at the origin, in eleven fanned bunches with their tips marked at the top; an inset enlarges the crossing, where dij marks the distance from one line to the point."></a><figcaption>Fig. 13: the measured configurations: the end-effector's axis in each configuration, in eleven bunches, one per rolling angle, with the positions of the zero-pitch nut marked at their tips; all should pass through the nominal RCM point. The inset enlarges the crossing: d<sub>ij</sub> is the distance from the axis of configuration ij to the nominal RCM point.</figcaption></figure>
+            <figure class="paper-fig" style="--ar:1.1806"><a class="zoom" href="fig-12-axis-distance.webp"><img src="fig-12-axis-distance.webp" width="1033" height="875" loading="lazy" alt="Figure 12(a): a jagged colored surface of the distance dij, in millimeters, over the rolling angle θ, 70° to 120°, and the insertion l, 200 to 250 mm, with the labels Mean: 0.535mm and Max: 1.210mm."></a><figcaption>Fig. 12(a): the distance d<sub>ij</sub> from the end-effector's axis to the nominal RCM point, over the rolling angle θ and the insertion l of the measured configurations.</figcaption></figure>
+          </div>
+        </div>
+        <div class="tab-panel" id="panel-rolling" role="tabpanel" aria-labelledby="tab-rolling">
+          <figure class="wide paper-fig" style="max-width:520px"><a class="zoom" href="fig-12-rolling-error.webp"><img src="fig-12-rolling-error.webp" width="1012" height="875" loading="lazy" alt="Figure 12(b): a jagged colored surface of the rolling error δθij, in degrees, over the rolling angle θ and the insertion l, with the labels Mean: 0.199° and Max: 0.489°."></a><figcaption>Fig. 12(b): the error δθ<sub>ij</sub> of the rolling angle, over the measured configurations.</figcaption></figure>
+        </div>
+        <div class="tab-panel" id="panel-insertion" role="tabpanel" aria-labelledby="tab-insertion">
+          <figure class="wide paper-fig" style="max-width:520px"><a class="zoom" href="fig-12-insertion-error.webp"><img src="fig-12-insertion-error.webp" width="1028" height="875" loading="lazy" alt="Figure 12(c): a colored surface of the insertion error pij, in millimeters, over the rolling angle θ and the insertion l, with the labels Mean: 1.024mm and Max: 1.992mm."></a><figcaption>Fig. 12(c): the error p<sub>ij</sub> of the insertion along the end-effector's axis, over the measured configurations.</figcaption></figure>
+        </div>
+        <div class="tab-panel" id="panel-repeatability" role="tabpanel" aria-labelledby="tab-repeatability">
+          <figure class="wide paper-fig"><a class="zoom" href="fig-14-repeatability.webp"><img src="fig-14-repeatability.webp" width="1621" height="719" loading="lazy" alt="Figure 14: left, a plot in x and y, in millimeters, of lines fanned in eleven directions through the origin, with their measured points at the top and the bottom; right, a colored surface of the repeated positioning error, in millimeters, over height and angle, with the labels Mean: 0.17mm and Max: 0.62mm."></a><figcaption>Fig. 14: repeatability within the prescribed workspace: the configurations measured (left), and the repeated positioning error across them (right).</figcaption></figure>
+        </div>
+      </div>
+      <div class="wide stats">
+        <div class="stat"><b>0.54&nbsp;mm</b><span>Mean distance from the end-effector's axis to the RCM point; maximum 1.21&nbsp;mm</span></div>
+        <div class="stat"><b>0.20°</b><span>Mean rolling error; maximum 0.49°</span></div>
+        <div class="stat"><b>1.02&nbsp;mm</b><span>Mean insertion error; maximum 1.99&nbsp;mm</span></div>
+        <div class="stat"><b>0.17&nbsp;mm</b><span>Mean repeatability; maximum 0.62&nbsp;mm</span></div>
+      </div>
+      <div class="reading">
+        <p>Limits remain. A few extreme configurations could not be reached, because the linkages and the cable drives interfere mechanically. Manufacturing and assembly errors also mean that the positioning accuracy is not yet as high as actual minimally invasive surgery requires: the prototype is a preliminary one, built to check that the design works. Better prototypes for specific procedures, made with high-performance materials and precise fabrication, and a kinematic calibration that compensates for the manufacturing and assembly errors, are left to future work.</p>
+      </div>
+    </section>
+
+    <section class="section soft" id="qa">
+      <div class="reading">
+        <p class="eyebrow">Questions &amp; answers</p>
+        <h2>Common questions.</h2>
+        <div class="qa">
+          <details><summary>What is a remote center of motion?</summary><p>A fixed point, far from the mechanism's base, about which the end-effector moves: the mechanism itself keeps the end-effector's axis passing through that point. In minimally invasive surgery, the instrument has to roll, pitch and spin about the incision point and slide through it (Fig.&nbsp;1), and an RCM mechanism provides such motion mechanically.</p></details>
+          <details><summary>Why split the motion among three linkages?</summary><p>The motion then comes from simple planar linkages with one degree of freedom, each driven by its own motor and each with closed-form kinematics. The forward and inverse kinematics of the whole mechanism follow linkage by linkage, rolling is decoupled from spinning and insertion, and the only singularities are the dead points of the single linkages, which the choice of link lengths keeps out of the workspace.</p></details>
+          <details><summary>Why a Peaucellier–Lipkin straight-line linkage?</summary><p>Its output point moves on an exact straight line as its crank turns. Mounted so that this line is the end-effector's axis, it moves a nut of the dual-helical joint along that axis; and since its output lies on the axis, its transmission angle stays at 90° in theory, so force passes well from the crank to the joint.</p></details>
+          <details><summary>How accurate is the prototype?</summary><p>Over 121 configurations, the end-effector's axis passed the nominal RCM point at 0.54&nbsp;mm on average and 1.21&nbsp;mm at most; the rolling error was 0.20° on average and 0.49° at most, and the insertion error 1.02&nbsp;mm on average and 1.99&nbsp;mm at most, mostly from the cable drives. The repeatability was 0.17&nbsp;mm on average and 0.62&nbsp;mm at most. For a preliminary prototype built with easy-to-access materials and simple methods, the authors consider these errors acceptable; they are not yet the accuracy actual surgery requires.</p></details>
+          <details><summary>How is pitch added for the full 3R1T motion?</summary><p>With a revolute joint on the fixed base, driven directly; Fig.&nbsp;2 marks the pitch about the line through the base and the RCM point. With it, the planar 2R1T design can be extended to a spatial 3R1T mechanism.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="paper">
+      <div class="reading">
+        <p class="eyebrow">Paper &amp; authors</p>
+        <h2>A planar RCM mechanism<br><em>from simple linkages.</em></h2>
+        <p class="paper-title">Design and Validation of A Novel Planar 2R1T Remote <span style="white-space:nowrap">Center-of-motion</span> Mechanism Composing of <span style="white-space:nowrap">Dual-Triangular</span> and <span style="white-space:nowrap">Straight-Line</span> Linkages</p>
+        <p>Genliang&nbsp;Chen, Yuanhao&nbsp;Xun, Yuchen&nbsp;Chai, Siyue&nbsp;Yao, Chao&nbsp;Chen, and Hao&nbsp;Wang.</p>
+        <p class="venue">Journal of Mechanisms and Robotics, 2021.</p>
+        <div class="paper-links"><a class="text-link" href="https://doi.org/10.1115/1.4052339">Read the paper at doi.org/10.1115/1.4052339 ↗</a></div>
+        <details class="evidence citation" id="citation">
+          <summary>Citation / BibTeX</summary>
+          <div class="citation-actions"><button class="citation-copy" id="copy-bibtex" type="button" aria-describedby="citation-status" hidden>Copy BibTeX</button><a href="citation.bib" download>Download .bib ↓</a></div>
+          <p class="citation-status" id="citation-status" role="status" aria-live="polite"></p>
+          <pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex">@article{chen2021rcm,
+  title     = {Design and Validation of A Novel Planar {2R1T} Remote Center-of-motion Mechanism Composing of Dual-Triangular and Straight-Line Linkages},
+  author    = {Chen, Genliang and Xun, Yuanhao and Chai, Yuchen and Yao, Siyue and Chen, Chao and Wang, Hao},
+  journal   = {Journal of Mechanisms and Robotics},
+  pages     = {1--11},
+  year      = {2021},
+  publisher = {ASME International},
+  doi       = {10.1115/1.4052339}
+}</code></pre>
+        </details>
+        <details class="evidence"><summary>Full affiliations</summary><ol class="affiliation-list"><li>Shanghai Key Laboratory of Digital Manufacture for Thin-walled Structures, and State Key Laboratory of Mechanical System and Vibration, Shanghai Jiao Tong University, Shanghai, 200240, P.R. China</li><li>Department of Mechanical and Aerospace Engineering, Monash University, Clayton, Victoria 3802, Australia</li></ol><p class="small">* Corresponding author: Genliang Chen</p></details>
+      </div>
+    </section>
+
+    <section class="section related" id="related">
+      <div class="wide">
+        <p class="eyebrow">Related projects</p>
+        <ul class="related-list">
+          <li><a href="https://bricard-kinematics.github.io/"><b>Plane-symmetric Bricard kinematics</b><span>Every configuration of a general plane-symmetric Bricard mechanism from two coplanar ellipses · MMT 2023</span></a></li>
+          <li><a href="https://bricard-bifurcation.github.io/"><b>Bricard bifurcations</b><span>A geometric approach to where plane-symmetric Bricard mechanisms bifurcate · ReMAR 2024</span></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="#paper">Paper &amp; authors ↑</a>
+  </footer>
+  <dialog id="lightbox" aria-label="Enlarged figure"><button class="close-lightbox" type="button" aria-label="Close enlarged figure">×</button><img alt=""></dialog>
+<script>
+// Shared behavior for Siyue Yao's project pages: looping clips that play only while on screen, tabs,
+// chapter buttons, links that open <details>, BibTeX copy, the figure lightbox and section highlighting.
+// No dependencies. Without JavaScript every tab panel stays visible and clips keep native controls.
+(() => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* Looping clips */
+  const loops = [...document.querySelectorAll("video.loop")];
+  const manualPause = new WeakSet();
+  const inView = new WeakSet();
+  const buttonFor = (video) => document.querySelector(`[data-video="${video.id}"]`);
+  function update(video) {
+    const button = buttonFor(video);
+    if (!button) return;
+    button.textContent = video.paused ? "Play clip" : "Pause clip";
+    button.setAttribute("aria-pressed", String(!video.paused));
+  }
+  function play(video) {
+    const promise = video.play();
+    if (promise) promise.catch(() => update(video));
+  }
+  const mayAutoplay = (video) => inView.has(video) && !manualPause.has(video) && !reduced.matches && !document.hidden;
+  loops.forEach((video) => {
+    video.muted = true;
+    video.removeAttribute("controls");
+    video.addEventListener("play", () => update(video));
+    video.addEventListener("pause", () => update(video));
+    update(video);
+    const button = buttonFor(video);
+    if (button) {
+      button.addEventListener("click", () => {
+        if (video.paused) { manualPause.delete(video); play(video); }
+        else { manualPause.add(video); video.pause(); }
+      });
+    }
+  });
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) { inView.add(target); if (mayAutoplay(target)) play(target); }
+      else { inView.delete(target); target.pause(); }
+    }), { threshold: 0.3 });
+    loops.forEach((video) => observer.observe(video));
+  }
+  const resync = () => loops.forEach((video) => {
+    if (mayAutoplay(video)) play(video);
+    else if (document.hidden || reduced.matches) video.pause();
+  });
+  document.addEventListener("visibilitychange", resync);
+  reduced.addEventListener("change", resync);
+
+  /* Full videos: only one plays at a time */
+  const fullVideos = [...document.querySelectorAll("video:not(.loop)")];
+  fullVideos.forEach((video) => video.addEventListener("play", () => {
+    fullVideos.forEach((other) => { if (other !== video) other.pause(); });
+  }));
+
+  /* Tabs */
+  document.querySelectorAll('[role="tablist"]').forEach((list) => {
+    const tabs = [...list.querySelectorAll('[role="tab"]')];
+    if (!tabs.length) return;
+    const panelOf = (tab) => document.getElementById(tab.getAttribute("aria-controls"));
+    function select(selected, moveFocus = false) {
+      tabs.forEach((tab) => {
+        const active = tab === selected;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        const panel = panelOf(tab);
+        if (!panel) return;
+        panel.hidden = !active;
+        if (!active) panel.querySelectorAll("video").forEach((video) => video.pause());
+      });
+      if (moveFocus) selected.focus();
+    }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const target = { ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 }[event.key];
+        if (target === undefined) return;
+        event.preventDefault();
+        select(tabs[target], true);
+      });
+    });
+    select(tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0]);
+  });
+
+  /* Chapter buttons: <button data-target="video-id" data-time="12.4"> */
+  document.querySelectorAll("button[data-time][data-target]").forEach((button) => button.addEventListener("click", () => {
+    const video = document.getElementById(button.dataset.target);
+    if (!video) return;
+    const seek = () => { video.currentTime = Number(button.dataset.time); play(video); };
+    if (video.readyState >= 1) seek();
+    else {
+      video.addEventListener("loadedmetadata", seek, { once: true });
+      video.preload = "metadata";
+      video.load();
+    }
+    video.scrollIntoView({ block: "center", behavior: reduced.matches ? "instant" : "smooth" });
+  }));
+
+  /* Links to a <details> open it (e.g. the BibTeX button) */
+  const openDetails = (hash) => {
+    if (!hash || hash.length < 2) return;
+    const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (target instanceof HTMLDetailsElement) target.open = true;
+  };
+  document.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener("click", () => openDetails(link.hash)));
+  openDetails(window.location.hash);
+
+  /* BibTeX copy */
+  const copy = document.getElementById("copy-bibtex");
+  const bibtex = document.getElementById("bibtex");
+  const status = document.getElementById("citation-status");
+  if (copy && bibtex && status) {
+    copy.hidden = false;
+    copy.addEventListener("click", async () => {
+      status.textContent = "";
+      try {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error("Clipboard unavailable");
+        await navigator.clipboard.writeText(`${bibtex.textContent.trim()}\n`);
+        status.textContent = "BibTeX copied to clipboard.";
+      } catch {
+        status.textContent = "Could not copy automatically. Select the BibTeX below and copy it, or download the .bib file.";
+      }
+    });
+  }
+
+  /* Figure lightbox */
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox && typeof lightbox.showModal === "function") {
+    const image = lightbox.querySelector("img");
+    document.querySelectorAll("a.zoom").forEach((link) => link.addEventListener("click", (event) => {
+      event.preventDefault();
+      image.src = link.href;
+      image.alt = link.querySelector("img")?.alt || "";
+      lightbox.showModal();
+      document.body.style.overflow = "hidden";
+    }));
+    lightbox.querySelector("button").addEventListener("click", () => lightbox.close());
+    lightbox.addEventListener("click", (event) => { if (event.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener("close", () => { document.body.style.overflow = ""; });
+  }
+
+  /* Section nav highlight */
+  const navLinks = [...document.querySelectorAll(".section-nav a")];
+  if (navLinks.length && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((link) => link.classList.toggle("active", link.hash === `#${entry.target.id}`));
+    }), { rootMargin: "-20% 0px -65% 0px" });
+    navLinks.forEach((link) => {
+      const section = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+      if (section) observer.observe(section);
+    });
+  }
+})();
+</script>
+</body>
+</html>
